@@ -14,12 +14,12 @@ public class Connection {
 
         URL url = new URL("http://api.weatherstack.com/current?access_key=" + apiKey + "&query=" + city);
         URLConnection connection = url.openConnection();
-        Scanner scanner = new Scanner(connection.getInputStream());
-        while (scanner.hasNext()) {
-            stringBuilder.append(scanner.nextLine());
+        try (Scanner scanner = new Scanner(connection.getInputStream())) {
+            while (scanner.hasNext()) {
+                stringBuilder.append(scanner.nextLine());
+            }
         }
-
-//        System.out.println("от сервера пришел ответ: " + stringBuilder);
+        //        System.out.println("от сервера пришел ответ: " + stringBuilder);
         return stringBuilder.toString();
     }
 }
